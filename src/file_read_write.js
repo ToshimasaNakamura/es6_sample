@@ -10,4 +10,4 @@ fs.readFile('./test.txt', 'utf8', function(err, data) {
   }
 })
 // test.txtファイルにデータを書き込む
-fs.appendFile('./test.txt', "", function(err) {});
+fs.appendFile('./test.txt',date , function(err) {});
