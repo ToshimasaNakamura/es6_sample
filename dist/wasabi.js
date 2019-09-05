@@ -4,7 +4,13 @@ var _axios = _interopRequireDefault(require("axios"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-// 「axios」モジュールを読み込み、利用できるようにする
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var format = require('date-fns/format');
+
+var today = format(new Date(), 'yyyy-MM-dd');
+var titles_arr = [];
+
 var fs = require('fs'); //https://www2.yupiteru.co.jp/api/products はyupiteru製品の製品型番を取得できるAPI
 //https://www2.yupiteru.co.jp/api/products にアクセスし、データを取得
 //取得したデータをコンソールに出力
@@ -12,6 +18,9 @@ var fs = require('fs'); //https://www2.yupiteru.co.jp/api/products はyupiteru�
 
 _axios["default"].get('https://www.googleapis.com/youtube/v3/channels?part=statistics&id=UCy5J11L_Gl0uxzOouLI8wpg&key=AIzaSyBij6yjwR8ZMsYtDVAKwlWJNRmaE2Mgtbc').then(function (response) {
   var subscriberCount = response.data.items[0].statistics.subscriberCount;
-  console.log("チャンネル登録者数は" + subscriberCount + "です");
-  fs.appendFile('./test.txt', "チャンネル登録者数は" + subscriberCount + "です", function (err) {});
+  console.log(subscriberCount);
+  titles_arr.push(_defineProperty({}, today, subscriberCount));
+  var json_text = JSON.stringify(titles_arr);
+  console.log(json_text);
+  fs.writeFile('.youtube.json', json_text, function (err) {});
 });
